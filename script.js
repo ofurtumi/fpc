@@ -11,8 +11,6 @@ if (window.location.hostname !== 'www.sjomli.is') {
 	document.querySelector('header').remove();
 }
 
-
-
 const butt = document.querySelector('#getRes');
 const inp = document.querySelector('#floatIn');
 const output = document.querySelector('#decOut');
@@ -27,11 +25,11 @@ let bannad1 = document.querySelector('#bannad1');
 let bannad2 = document.querySelector('#bannad2');
 
 /** hver er heildarlengd fleytitölunar */
-let blen; 
+let blen;
 /** hver er bias fyrir tölu af stærð blen */
 let bias;
 /** hver er lengd expo bitastrengsins */
-let elen;  
+let elen;
 
 changer.addEventListener('click', () => {
 	let bl = Math.round(Number(lenInp.value));
@@ -155,9 +153,25 @@ function calculate() {
 }
 
 const urlParams = window.location.search;
-if (urlParams && urlParams.substring(1).split("?").length >= 2) {
-	let UPNum = urlParams.substring(1).split("?").map(x => Number(x))
-	setGlobals(UPNum[0], UPNum[1])
-	inp.value = Array(UPNum[0]).fill(0).map((x,i) => i == UPNum[1] ? 0 : ""+Math.round(Math.random()*1)).join("")
-	calculate()
+if (urlParams && urlParams.substring(1).split('?').length >= 2) {
+	let UPNum = urlParams
+		.substring(1)
+		.split('?')
+		.map((x) => Number(x));
+	setGlobals(UPNum[0], UPNum[1]);
+	console.table(UPNum)
+	lenInp.value = UPNum[0];
+	expoInp.value = UPNum[1];
+
+	if (UPNum[2]) {
+		inp.value = UPNum[2];
+	} else {
+		inp.value = Array(UPNum[0])
+			.fill(0)
+			.map((x, i) =>
+				i == UPNum[1] ? 0 : '' + Math.round(Math.random() * 1)
+			)
+			.join('');
+	}
+	calculate();
 }
